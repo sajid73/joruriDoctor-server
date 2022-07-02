@@ -5,31 +5,15 @@ const {
   generateJWT,
 } = require("../utils/authUtils");
 const jwt = require("jsonwebtoken");
+const { authSignup } = require("./auth.controller");
 
-exports.signup = async (req, res) => {
+module.exports.signup = async (req, res) => {
   try {
-    const existing = await User.findOne(
-      { email: req.body.email },
-      { password: 0, createdAt: 0, updatedAt: 0 }
-    );
-    // finding already existing email
-    if (existing) {
-      return res.status(201).json({
-        error: true,
-        message: "Email already exists!",
-      });
-    }
-    req.body.password = await hashPassword(req.body.password, 10);
     delete req.body.role;
-
-    const newUser = await User.create(req.body);
-
-    const userObj = JSON.parse(JSON.stringify(newUser));
-    delete userObj.password;
-    const token = await generateJWT(userObj._id);
+    const { user, token } = await authSignup(req, res);
     return res.status(201).json({
-      user: userObj,
-      token: token,
+      user,
+      token,
       message: "Registration completed!",
     });
   } catch (error) {
