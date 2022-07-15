@@ -10,6 +10,8 @@ const doctorSchema = new mongoose.Schema(
     specilities: {
       type: [String],
     },
+    experience: Number,
+    working: String,
     fees: {
       type: Number,
       required: [true, "Fee amount is required"],

@@ -22,7 +22,6 @@ module.exports.createDoctor = async (req, res) => {
 
 module.exports.findDoctors = async (req, res) => {
   try {
-    console.log(req.query);
     const doctors = await Doctor.find(req.query).populate("userId");
 
     return res.status(200).json({

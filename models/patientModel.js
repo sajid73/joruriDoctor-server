@@ -8,6 +8,7 @@ const patientSchema = new mongoose.Schema(
       ref: "User",
     },
     dob: Date,
+    bloodGroup: String,
   },
   {
     timestamps: true,
