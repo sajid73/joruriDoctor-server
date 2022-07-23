@@ -12,6 +12,7 @@ const doctorSchema = new mongoose.Schema(
     },
     experience: Number,
     working: String,
+    qualifications: String,
     fees: {
       type: Number,
       required: [true, "Fee amount is required"],

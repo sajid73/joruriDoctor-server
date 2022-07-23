@@ -9,6 +9,8 @@ const patientSchema = new mongoose.Schema(
     },
     dob: Date,
     bloodGroup: String,
+    healthHistory: String,
+    address: String,
   },
   {
     timestamps: true,

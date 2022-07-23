@@ -6,11 +6,14 @@ const {
 } = require("../utils/authUtils");
 const jwt = require("jsonwebtoken");
 const { authSignup } = require("./auth.controller");
+const Doctor = require("../models/doctorModel");
+const { createPatient } = require("./patient.controller");
+const Patient = require("../models/patientModel");
 
 module.exports.signup = async (req, res) => {
   try {
     delete req.body.role;
-    const { user, token } = await authSignup(req, res);
+    const { user, token } = await createPatient(req, res);
     return res.status(201).json({
       user,
       token,
@@ -62,6 +65,34 @@ module.exports.findMe = async (req, res) => {
     const user = await User.findById(decode.id);
     return res.status(201).json({
       user: user,
+      token: req.body.token,
+      message: "User data pulled",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      error: error.message,
+      message: "Something went wrong on getting user data!",
+    });
+  }
+};
+
+module.exports.updateMe = async (req, res) => {
+  try {
+    const { token, user } = req.body;
+    delete user.role;
+    const decode = jwt.decode(token);
+    const userData = await User.findById(decode.id);
+    const userUpdate = await User.findByIdAndUpdate(userData._id, user, {
+      new: true,
+    });
+    if (userUpdate.role === "doctor") {
+      await Doctor.findOneAndUpdate({ userId: userUpdate._id }, user);
+    } else if (userUpdate.role === "patient") {
+      await Patient.findOneAndUpdate({ userId: userUpdate._id }, user);
+    }
+    return res.status(204).json({
+      user: userUpdate,
       token: req.body.token,
       message: "User data pulled",
     });
