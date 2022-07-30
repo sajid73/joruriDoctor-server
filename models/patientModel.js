@@ -20,6 +20,14 @@ const patientSchema = new mongoose.Schema(
   }
 );
 
+patientSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "userId",
+    select: "name",
+  });
+  next();
+});
+
 const Patient = mongoose.model("Patient", patientSchema);
 
 module.exports = Patient;

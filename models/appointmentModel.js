@@ -7,18 +7,16 @@ const appointmentSchema = new mongoose.Schema(
     doctorId: {
       type: mongoose.Schema.ObjectId,
       ref: "Doctor",
+      required: [true, "Doctor must de selected"],
     },
     patientId: {
       type: mongoose.Schema.ObjectId,
       ref: "Patient",
+      required: [true, "A patient must de defined"],
     },
     problem: {
       type: String,
       required: [true, "Problem must de defined"],
-    },
-    booked: {
-      type: Date,
-      default: Date.now(),
     },
     appointmentTime: {
       type: Date,

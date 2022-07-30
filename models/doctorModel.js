@@ -21,6 +21,7 @@ const doctorSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
+    service_hours: String,
     rating: {
       type: Number,
       min: 1,
@@ -34,6 +35,14 @@ const doctorSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+doctorSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "userId",
+    select: "name avatar",
+  });
+  next();
+});
 
 const Doctor = mongoose.model("Doctor", doctorSchema);
 

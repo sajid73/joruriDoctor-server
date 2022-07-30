@@ -24,7 +24,7 @@ app.all("*", (req, res, next) => {
   //   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
   return res.status(404).json({
     error: true,
-    message: "Route is not found!",
+    message: `Can't find ${req.originalUrl} on this server!`,
   });
 });
 
