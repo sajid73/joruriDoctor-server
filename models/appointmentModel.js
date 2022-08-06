@@ -42,6 +42,14 @@ const appointmentSchema = new mongoose.Schema(
   }
 );
 
+appointmentSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "patientId",
+    select: "socketId",
+  });
+  next();
+});
+
 const Appointment = mongoose.model("Appointment", appointmentSchema);
 
 module.exports = Appointment;

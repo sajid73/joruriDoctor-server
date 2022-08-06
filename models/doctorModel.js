@@ -39,7 +39,7 @@ const doctorSchema = new mongoose.Schema(
 doctorSchema.pre(/^find/, function (next) {
   this.populate({
     path: "userId",
-    select: "name avatar",
+    select: "name avatar email",
   });
   next();
 });
