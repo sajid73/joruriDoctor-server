@@ -1,16 +1,22 @@
 const express = require("express");
 const mongoSanitize = require("express-mongo-sanitize");
-const cors = require("cors");
 const bodyParser = require("body-parser");
 const user = require("./routes/user.route");
 const doctor = require("./routes/doctor.route");
 const patient = require("./routes/patient.route");
 const appointment = require("./routes/appointment.route");
+const cors = require("cors");
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,            //access-control-allow-credentials:true
+  optionSuccessStatus: 200
+}
 
 const app = express();
 
 // middlewares
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(mongoSanitize());
 app.use(bodyParser.json());
 
