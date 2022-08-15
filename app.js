@@ -7,10 +7,10 @@ const patient = require("./routes/patient.route");
 const appointment = require("./routes/appointment.route");
 const cors = require("cors");
 
+app.use(cors());
 const app = express();
 
 // middlewares
-app.use(cors());
 app.use(mongoSanitize());
 app.use(bodyParser.json());
 
