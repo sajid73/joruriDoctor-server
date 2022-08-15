@@ -34,6 +34,21 @@ module.exports.updateAppointment = async (req, res) => {
   }
 };
 
+module.exports.getAppointment = async (req, res) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+    return res.status(200).json({
+      appointment,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      error: error.message,
+      message: "Something went wrong on creating appointment!",
+    });
+  }
+};
+
 module.exports.appointmentList = async (req, res) => {
   try {
     const { userId, role } = req.query;
