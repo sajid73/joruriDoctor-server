@@ -7,16 +7,10 @@ const patient = require("./routes/patient.route");
 const appointment = require("./routes/appointment.route");
 const cors = require("cors");
 
-const corsOptions = {
-  origin: ['http://localhost:3000', 'https://joruri-doctor.netlify.app'],
-  credentials: true,            //access-control-allow-credentials:true
-  optionSuccessStatus: 200
-}
-
 const app = express();
 
 // middlewares
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(mongoSanitize());
 app.use(bodyParser.json());
 
