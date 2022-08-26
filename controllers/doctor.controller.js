@@ -20,10 +20,29 @@ module.exports.createDoctor = async (req, res) => {
   }
 };
 
+module.exports.updateDoctor = async (req, res) => {
+  try {
+    const doctor = await Doctor.findByIdAndUpdate(req.params.id, req.body);
+    return res.status(200).json({
+      doctor
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error,
+      error: error.message,
+      message: "Something went wrong on adding doctor!",
+    });
+  }
+};
+
 module.exports.findDoctors = async (req, res) => {
   try {
+    if (req.query.isApproved) {
+      req.query = req.query;
+    } else {
+      req.query = { ...req.query, isApproved: true }
+    }
     const doctors = await Doctor.find(req.query).populate("userId");
-
     return res.status(200).json({
       doctors,
     });
