@@ -36,7 +36,7 @@ module.exports.updateAppointment = async (req, res) => {
 
 module.exports.getAppointment = async (req, res) => {
   try {
-    const appointment = await Appointment.findById(req.params.id);
+    const appointment = await Appointment.findById(req.params.id).populate("patientId").populate("doctorId");
     return res.status(200).json({
       appointment,
     });
@@ -65,6 +65,7 @@ module.exports.appointmentList = async (req, res) => {
         appointmentTime: {
           $eq: new Date().setUTCHours(0, 0, 0, 0)
         },
+        isPaid: true
       })
         .populate("patientId")
         .populate("doctorId");

@@ -26,6 +26,10 @@ const appointmentSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isPaid: {
+      type: Boolean,
+      default: false
+    },
     prescription: String,
     exams: String,
   },
@@ -42,6 +46,10 @@ appointmentSchema.pre(/^find/, function (next) {
     path: "patientId",
     select: "socketId",
   });
+  this.populate({
+    path: "doctorId",
+    select: "fees"
+  })
   next();
 });
 

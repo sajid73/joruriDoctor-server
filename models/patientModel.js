@@ -11,6 +11,7 @@ const patientSchema = new mongoose.Schema(
     bloodGroup: String,
     healthHistory: String,
     address: String,
+    feedback: String,
     socketId: String,
   },
   {
