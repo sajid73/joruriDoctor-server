@@ -48,7 +48,7 @@ appointmentSchema.pre(/^find/, function (next) {
   });
   this.populate({
     path: "doctorId",
-    select: "fees rating"
+    select: "fees rating service_hours"
   })
   next();
 });
