@@ -24,7 +24,7 @@ const appointmentSchema = new mongoose.Schema(
     },
     appointmentTime: {
       type: Date,
-      required: [true, "Date of appointment is required!"],
+      required: function () { return this.isEmergency === false }
     },
     isDone: {
       type: Boolean,

@@ -60,7 +60,7 @@ module.exports.appointmentList = async (req, res) => {
         appiontments,
       });
     } else if (role === "doctor") {
-      const appiontments = await Appointment.find({
+      let appiontments = await Appointment.find({
         doctorId: userId,
         appointmentTime: {
           $eq: new Date().setUTCHours(0, 0, 0, 0)
@@ -69,8 +69,9 @@ module.exports.appointmentList = async (req, res) => {
       })
         .populate("patientId")
         .populate("doctorId");
+      const emergency = await Appointment.find({ isEmergency: true }).sort({ _id: -1 }).limit(5);
       return res.status(200).json({
-        appiontments,
+        appiontments: [...emergency, ...appiontments],
       });
     }
     // const appiontments = await Appointment.find();
