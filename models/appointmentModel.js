@@ -14,6 +14,10 @@ const appointmentSchema = new mongoose.Schema(
       ref: "Patient",
       required: [true, "A patient must de defined"],
     },
+    isEmergency: {
+      type: Boolean,
+      default: false
+    },
     problem: {
       type: String,
       required: [true, "Problem must de defined"],
