@@ -69,7 +69,7 @@ module.exports.appointmentList = async (req, res) => {
       })
         .populate("patientId")
         .populate("doctorId");
-      const emergency = await Appointment.find({ isEmergency: true }).sort({ _id: -1 }).limit(5);
+      const emergency = await Appointment.find({ isEmergency: true, isDone: false }).sort({ _id: -1 }).limit(5);
       return res.status(200).json({
         appiontments: [...emergency, ...appiontments],
       });
